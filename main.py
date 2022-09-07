@@ -13,10 +13,11 @@ def main(ip):
     print('HostMin:', net[1])
     print('HostMax:', net[-2])
     print('Hosts:', len(list(net.hosts())))  # Выводит кол-во хостовых ip
+    count = 0
     for n_ip in net.hosts():
+        count += 1
         if str(n_ip) == list_ip[0]:
-            list_n_ip = str(n_ip).split('.')
-            print('№ в сети:', list_n_ip[3])
+            print('№ в сети:', count)  # Выводит какой ip по счёту в сети
             break
 
 
