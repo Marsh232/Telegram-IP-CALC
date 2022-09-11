@@ -26,8 +26,16 @@ def subnets(ip, prefix):
     subnet1 = ipaddress.ip_network(str(list_subnet[1]), strict=False)
 
     print('\nМаска:', subnet1.netmask, '=', prefix)
+    print()
 
-    #for i in
+    for i in list_subnet:
+        subnet2 = ipaddress.ip_network(i, strict=False)
+        print('Network:', subnet2)
+        print('Broadcast:', subnet2.broadcast_address)
+        print('HostMin:', subnet2[1])
+        print('HostMax:', subnet2[-2])
+        print('Hosts:', len(list((subnet2.hosts()))))
+        print()
 
 
 if __name__ == '__main__':
