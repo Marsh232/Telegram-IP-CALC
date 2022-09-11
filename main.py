@@ -1,5 +1,5 @@
-import telebot
 import config
+import telebot
 import ipaddress
 
 bot = telebot.TeleBot(config.TOKEN)
