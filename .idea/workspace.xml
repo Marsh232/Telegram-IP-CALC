@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="56d3644b-12ed-4137-967a-9e3a3c12d93b" name="Changes" comment="add func subnets">
+    <list default="true" id="56d3644b-12ed-4137-967a-9e3a3c12d93b" name="Changes" comment="Add subnets">
+      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
@@ -12,6 +13,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -104,7 +112,7 @@
       <workItem from="1662496666820" duration="3601000" />
       <workItem from="1662542574124" duration="3363000" />
       <workItem from="1662648763510" duration="5935000" />
-      <workItem from="1662886058001" duration="1294000" />
+      <workItem from="1662886058001" duration="5418000" />
     </task>
     <task id="LOCAL-00001" summary="Add basic output">
       <created>1662545492088</created>
@@ -127,7 +135,14 @@
       <option name="project" value="LOCAL" />
       <updated>1662661462393</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add subnets">
+      <created>1662887439537</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1662887439537</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,14 +163,15 @@
     <MESSAGE value="Add basic output" />
     <MESSAGE value="hz" />
     <MESSAGE value="add func subnets" />
-    <option name="LAST_COMMIT_MESSAGE" value="add func subnets" />
+    <MESSAGE value="Add subnets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add subnets" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>45</line>
+          <line>48</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>

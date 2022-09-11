@@ -1,5 +1,8 @@
+import telebot
+import config
 import ipaddress
 
+bot = telebot.TeleBot(config.TOKEN)
 
 def main(ip):
     list_ip = ip.split('/')  #  Разделяет вводимый ip на часть с маской, и без
