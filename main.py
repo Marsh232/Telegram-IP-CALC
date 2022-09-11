@@ -3,6 +3,9 @@ import telebot
 import ipaddress
 
 bot = telebot.TeleBot(config.TOKEN)
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.send_message(message.chat.id, 'Привет')
 
 def main(ip):
     list_ip = ip.split('/')  #  Разделяет вводимый ip на часть с маской, и без
@@ -42,6 +45,7 @@ def subnets(ip, prefix):
 
 
 if __name__ == '__main__':
+    bot.polling(none_stop=True)
     addr = input('Введите ip: ')  #  Пользователь вводит ip
     main(addr)
     #  Тут должна быть кнопка типа "Подсети"
