@@ -35,7 +35,7 @@ python3 main.py
 
 ## Copyright
 
-Licence: MIT
+Licence: [MIT](./LICENSE)
 
 * Marsh232
 * SantaSpeen
