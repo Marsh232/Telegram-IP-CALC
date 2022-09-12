@@ -1,4 +1,19 @@
+#  Project: Telegram-IP-CALC
+#  Filename: main.py
+#  Create Date:
+#  Marsh232 Copyright (c) 2022
+#  SantaSpeen Copyright (c) 2022
+
 import ipaddress
+import logging
+from aiogram import Bot
+
+from src.config import Config
+
+config = Config("config.json")
+log = logging.getLogger("Bot")
+
+bot = Bot(token=config.token)
 
 
 def main(ip):
