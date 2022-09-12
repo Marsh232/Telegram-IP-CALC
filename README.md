@@ -11,9 +11,8 @@
 
 ```shell
 git clone https://github.com/Marsh232/Telegram-IP-CALC
-cd Telegram-IP-CALC
+cd Telegram-IP-CALC/src
 pip install -r requirements.txt
-cd src
 ```
 
 ### Шаг 2
