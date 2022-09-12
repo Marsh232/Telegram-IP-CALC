@@ -73,7 +73,7 @@ async def start(msg: types.Message):
 @dp.message_handler(commands=["help"], chat_type=ChatType.PRIVATE)
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
-    await msg.reply("Команды:\n`/calcnet` - посчитать сеть\n`/calcsub` - разбить на подсети")
+    await msg.reply("Команды:\n/calcnet - посчитать сеть\n/calcsub - разбить на подсети")
 
 
 @dp.message_handler(commands=["calcnet"], chat_type=ChatType.PRIVATE)
