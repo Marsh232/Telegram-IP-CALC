@@ -73,18 +73,18 @@ async def start(msg: types.Message):
 @dp.message_handler(commands=["help"], chat_type=ChatType.PRIVATE)
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
-    await msg.reply("Ты беспомощный")
+    await msg.reply("Команды:\n`/calcnet` - посчитать сеть\n`/calcsub` - разбить на подсети")
 
 
-@dp.message_handler(commands=["calc"], chat_type=ChatType.PRIVATE)
-async def calc(msg: types.Message):
+@dp.message_handler(commands=["calcnet"], chat_type=ChatType.PRIVATE)
+async def calcnet(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     text = msg.text
     splt = text.split(" ")
     if len(splt) > 1:
         ip = splt[1]
         c = calc_subnet(ip)
-        await msg.reply(f"Данные ввода: `{c['addr']}`\n"
+        await msg.reply(f"Вводимые данные: `{c['addr']}`\n"
                         f"Маска: `{c['mask']}`\n"
                         f"Сеть: `{c['net']}`\n"
                         f"Broadcast: `{c['broadcast']}`\n"
@@ -94,12 +94,26 @@ async def calc(msg: types.Message):
                         f"Номер в сети: `{c['num']}`",
                         parse_mode=ParseMode.MARKDOWN)
     else:
-        await msg.reply("Пример выполнения команды:  `/calc 192.168.0.1/24`", parse_mode=ParseMode.MARKDOWN)
+        await msg.reply("**Командна введена не правильно**\n"
+                        "Пример выполнения команды: `/calcnet 192.168.0.1/24`",
+                        parse_mode=ParseMode.MARKDOWN)
+
+
+@dp.message_handler(commands=["calcsub"], chat_type=ChatType.PRIVATE)
+async def calcsub(msg: types.Message):
+    log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
+    text = msg.text
+    splt = text.split(" ")
+    if len(splt) > 1:
+        ip = splt[1]
+        await msg.reply("Не гатова")
+    else:
+        await msg.reply("**Командна введена не правильно**\n"
+                        "Пример выполнения команды: `/calcsub 192.168.0.1/24 26`",
+                        parse_mode=ParseMode.MARKDOWN)
 
 
 if __name__ == '__main__':
     executor.start_polling(dp)
-    exit(0)
-    #  Тут должна быть кнопка типа "Подсети"
-    # new_prefix = input('\nВведите префикс: ')
-    # subnets(addr, new_prefix)
+    # Тут должна быть кнопка типа "Подсети"
+    # subnets(input("ip: "), input('\nВведите префикс: '))
