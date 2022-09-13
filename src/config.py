@@ -12,7 +12,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)-29s - %(le
 class Config:
 
     # noinspection PyTypeChecker
-    def __init__(self, config_file="сonfig.json"):
+    def __init__(self, config_file="config.json"):
         self.log = logging.getLogger(__name__)
         self.debug = self.log.debug
 

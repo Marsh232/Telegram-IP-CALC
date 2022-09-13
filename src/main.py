@@ -13,7 +13,7 @@ from aiogram.utils import executor
 from config import Config
 from keyboard import *
 
-config = Config("сonfig.json")
+config = Config("config.json")
 log = logging.getLogger("Bot")
 bot = Bot(token=config.token)
 dp = Dispatcher(bot)

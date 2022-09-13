@@ -39,5 +39,5 @@ coverage.xml
 *.pot
 # Sphinx documentation
 docs/_build/
-src/сonfig.json
+src/config.json
 .idea/
