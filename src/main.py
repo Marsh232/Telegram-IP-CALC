@@ -10,9 +10,10 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.types import ChatType, ParseMode
 from aiogram.utils import executor
 
-from src.config import Config
+from config import Config
+from keyboard import *
 
-config = Config("config.json")
+config = Config("сonfig.json")
 log = logging.getLogger("Bot")
 bot = Bot(token=config.token)
 dp = Dispatcher(bot)
@@ -67,16 +68,16 @@ def subnets(ip, prefix):
 @dp.message_handler(commands=["start"], chat_type=ChatType.PRIVATE)
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
-    await msg.reply(f"Привет, дорогой мой {msg.from_user.username}")
+    await msg.reply(f"Привет, дорогой мой {msg.from_user.username}", reply_markup=kb)
 
 
-@dp.message_handler(commands=["help"], chat_type=ChatType.PRIVATE)
+@dp.message_handler(lambda msg: msg.text.startswith('Помощь'))
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     await msg.reply("Команды:\n/calcnet - посчитать сеть\n/calcsub - разбить на подсети")
 
 
-@dp.message_handler(commands=["calcnet"], chat_type=ChatType.PRIVATE)
+@dp.message_handler(lambda msg: msg.text.startswith('Сеть'))
 async def calcnet(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     text = msg.text
@@ -99,14 +100,14 @@ async def calcnet(msg: types.Message):
                         parse_mode=ParseMode.MARKDOWN)
 
 
-@dp.message_handler(commands=["calcsub"], chat_type=ChatType.PRIVATE)
+@dp.message_handler(lambda msg: msg.text.startswith('Подсети'))
 async def calcsub(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     text = msg.text
     splt = text.split(" ")
     if len(splt) > 1:
         ip = splt[1]
-        await msg.reply("Не гатова")
+        await msg.reply("Не готова")
     else:
         await msg.reply("**Командна введена не правильно**\n"
                         "Пример выполнения команды: `/calcsub 192.168.0.1/24 26`",
@@ -115,5 +116,3 @@ async def calcsub(msg: types.Message):
 
 if __name__ == '__main__':
     executor.start_polling(dp)
-    # Тут должна быть кнопка типа "Подсети"
-    # subnets(input("ip: "), input('\nВведите префикс: '))
