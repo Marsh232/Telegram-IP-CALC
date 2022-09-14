@@ -7,16 +7,20 @@
 import ipaddress
 import logging
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import ChatType, ParseMode
+from aiogram.types import ChatType, ParseMode, KeyboardButton, ReplyKeyboardMarkup
 from aiogram.utils import executor
 
-from config import Config
-from keyboard import *
+from utils import Config
 
 config = Config("config.json")
 log = logging.getLogger("Bot")
 bot = Bot(token=config.token)
 dp = Dispatcher(bot)
+
+network_button = KeyboardButton('Сеть')
+subnet_button = KeyboardButton('Подсети')
+start_buttons = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=False)
+start_buttons.row(network_button, subnet_button)
 
 
 def calc_subnet(_ip):
@@ -33,8 +37,8 @@ def calc_subnet(_ip):
         "mask": f"{net.netmask} - {mask}",  # Выводит маску
         "net": f"{net}",  # Выводит сеть
         "broadcast": f'{net.broadcast_address}',  # Выводит broadcast
-        "max": f"{net[1]}",
-        "min": f"{net[-2]}",
+        "min": f"{net[1]}",
+        "max": f"{net[-2]}",
         "hosts": f"{len(list(net.hosts()))}",
         "num": None
     }
@@ -68,39 +72,33 @@ def subnets(ip, prefix):
 @dp.message_handler(commands=["start"], chat_type=ChatType.PRIVATE)
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
-    await msg.reply(f"Привет, дорогой мой {msg.from_user.username}", reply_markup=kb)
+    await msg.reply(f"Привет, дорогой мой {msg.from_user.username}", reply_markup=start_buttons)
 
 
-@dp.message_handler(lambda msg: msg.text.startswith('Помощь'))
-async def start(msg: types.Message):
-    log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
-    await msg.reply("Команды:\n/calcnet - посчитать сеть\n/calcsub - разбить на подсети")
-
-
-@dp.message_handler(lambda msg: msg.text.startswith('Сеть'))
+@dp.message_handler(lambda msg: msg.text.lower().startswith('сеть'))
 async def calcnet(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
+    await msg.reply("Введи ip")
+
+
+@dp.message_handler(regexp=r"^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}(|\/\d{0,2})$", chat_type=ChatType.PRIVATE)
+async def calcnet1(msg):
+    log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     text = msg.text
-    splt = text.split(" ")
-    if len(splt) > 1:
-        ip = splt[1]
-        c = calc_subnet(ip)
-        await msg.reply(f"Вводимые данные: `{c['addr']}`\n"
-                        f"Маска: `{c['mask']}`\n"
-                        f"Сеть: `{c['net']}`\n"
-                        f"Broadcast: `{c['broadcast']}`\n"
-                        f"Макс адресов: `{c['max']}`\n"
-                        f"Мин адресов: `{c['min']}`\n"
-                        f"Всего адресов: `{c['hosts']}`\n"
-                        f"Номер в сети: `{c['num']}`",
-                        parse_mode=ParseMode.MARKDOWN)
-    else:
-        await msg.reply("**Командна введена не правильно**\n"
-                        "Пример выполнения команды: `/calcnet 192.168.0.1/24`",
-                        parse_mode=ParseMode.MARKDOWN)
+    c = calc_subnet(text)
+    await msg.reply(f"Вводимые данные: `{c['addr']}`\n"
+                    f"Маска: `{c['mask']}`\n"
+                    f"Сеть: `{c['net']}`\n"
+                    f"Broadcast: `{c['broadcast']}`\n"
+                    f"Мин адрес: `{c['min']}`\n"
+                    f"Макс адрес: `{c['max']}`\n"
+                    f"Всего адресов: `{c['hosts']}`\n"
+                    f"Номер в сети: `{c['num']}`",
+                    parse_mode=ParseMode.MARKDOWN,
+                    reply_markup=start_buttons)
 
 
-@dp.message_handler(lambda msg: msg.text.startswith('Подсети'))
+@dp.message_handler(lambda msg: msg.text.lower().startswith('подсети'))
 async def calcsub(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     text = msg.text
