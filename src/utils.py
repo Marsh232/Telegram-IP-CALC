@@ -6,6 +6,9 @@ import logging
 import json
 import os
 
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import State, StatesGroup
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)-29s - %(levelname)-5s - %(message)s")
 
 
@@ -53,3 +56,8 @@ class Cache:
             self.log.debug("Cannot found cache file at %s. Creating file..." % self.cache_file)
             with open(self.cache_file, 'x', encoding='utf-8') as f:
                 json.dump(self.raw_cache, f)
+
+
+class FSMachine(StatesGroup):
+    network = State()
+    subnetwork = State()
