@@ -60,23 +60,6 @@ def calc_net(_ip):
     return dict_out
 
 
-#def calc_subnets(ip, prefix):
-#    subnet = ipaddress.ip_network(ip, strict=False)
-#    list_subnet = list(subnet.subnets(new_prefix=int(prefix)))
-#    subnet1 = ipaddress.ip_network(str(list_subnet[1]), strict=False)
-#
-#    print('\nМаска:', subnet1.netmask, '=', prefix)
-#    print()
-#
-#    for i in list_subnet:
-#        subnet2 = ipaddress.ip_network(i, strict=False)
-#        print('Network:', subnet2)
-#        print('Broadcast:', subnet2.broadcast_address)
-#        print('HostMin:', subnet2[1])
-#        print('HostMax:', subnet2[-2])
-#        print('Hosts:', len(list((subnet2.hosts()))))
-
-
 @dp.message_handler(commands=["start"], state=None, chat_type=ChatType.PRIVATE)
 async def start(msg: types.Message):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
