@@ -130,7 +130,7 @@ async def calcnet1(msg: types.Message, state: FSMContext):
 async def calcsub(msg: types.Message, state: FSMContext):
     log.info(f"New message from {msg.from_user.id}(@{msg.from_user.username}) in {msg.chat.id}: '{msg.text}'")
     await FSMachine.subnetwork.set()
-    await msg.reply("**Введите ip с увеличенной маской**"
+    await msg.reply("**Введите ip с увеличенной маской**\n"
                     "**Пример -> 10.10.10.10/24 26**")
 
 
