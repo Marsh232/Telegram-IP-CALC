@@ -39,6 +39,10 @@ def calc_net(_ip):
     ip, mask = splt
     addr = ip + "/" + mask
 
+    internet = ''
+    ipv4 = ipaddress.ip_address(ip)
+    if ipv4.is_global: internet = 'Public network'
+    else: internet = 'Private network'
     net = ipaddress.ip_network(addr, strict=False)  # В функцию кладётся сетевая часть ip, без хостовой части
     dict_out = {
         "addr": addr,
@@ -48,7 +52,8 @@ def calc_net(_ip):
         "min": f"{net[1]}",
         "max": f"{net[-2]}",
         "hosts": f"{len(list(net.hosts()))}",
-        "num": None
+        "num": None,
+        "network": f"{internet}"
     }
 
     count = 0
@@ -104,6 +109,7 @@ async def calcnet1(msg: types.Message, state: FSMContext):
                     f"Макс адрес: `{c['max']}`\n"
                     f"Всего адресов: `{c['hosts']}`\n"
                     f"Номер в сети: `{c['num']}`",
+                    f"`{c['network']}`",
                     parse_mode=ParseMode.MARKDOWN,
                     reply_markup=start_buttons)
     await state.finish()
@@ -129,6 +135,14 @@ async def calcsub1(msg: types.Message, state: FSMContext):
             subnet = ipaddress.ip_network(ip, strict=False)
             list_subnet = list(subnet.subnets(new_prefix=int(prefix)))
             subnet1 = ipaddress.ip_network(str(list_subnet[1]), strict=False)
+            ip4 = ip.split('/')
+            ipv = ip4[0]
+            inter = ' '
+            ipv4 = ipaddress.ip_address(ipv)
+            if ipv4.is_global:
+                inter = 'Public network'
+            else:
+                inter = 'Private network'
 
             await msg.reply(f"Маска: {subnet1.netmask} = {prefix}")
 
@@ -139,6 +153,7 @@ async def calcsub1(msg: types.Message, state: FSMContext):
                                 f"HostMin: `{subnet2[1]}`\n"
                                 f"HostMax: `{subnet2[-2]}`\n"
                                 f"Hosts: `{len(list((subnet2.hosts())))}`",
+                                f"`{inter}`",
                                 parse_mode=ParseMode.MARKDOWN,
                                 reply_markup=start_buttons)
                 await state.finish()
